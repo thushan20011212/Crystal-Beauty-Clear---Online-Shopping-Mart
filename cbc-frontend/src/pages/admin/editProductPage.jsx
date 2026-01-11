@@ -37,7 +37,7 @@ export default function EditProductPage() {
             if(images.length > 0){
                 imageUrls = await Promise.all(promisesArray);
             }
-            
+
             console.log(imageUrls);
 
             const altNamesArray = altNames.split(",")
@@ -52,7 +52,7 @@ export default function EditProductPage() {
                 price : price,
                 stock : stock
             }
-            axios.put(import.meta.env.VITE_BACKEND_URL + "/api/products" , product , {
+            axios.put(import.meta.env.VITE_BACKEND_URL + "/api/products/"+productId , product , {
                 headers : {
                     "Authorization" : "Barer "+token
                 }
@@ -71,7 +71,7 @@ export default function EditProductPage() {
     return (
         <div className="w-full h-full flex-col justify-center items-center">
             <div className="text-3xl font-bold mb-4">Edit Product</div>
-            <input type="text" placeholder="Product Id" className="input input-bordered w-full max-w-x" value={productId} onChange={(e)=>setProductId(e.target.value)}/>
+            <input type="text" disabled placeholder="Product Id" className="input input-bordered w-full max-w-x" value={productId} onChange={(e)=>setProductId(e.target.value)}/>
             <input type="text" placeholder="Name" className="input input-bordered w-full max-w-x" value={name} onChange={(e)=>setName(e.target.value)}/>
             <input type="text" placeholder="Alt Names" className="input input-bordered w-full max-w-x" value={altNames} onChange={(e)=>setAltNames(e.target.value)}/>
             <input type="text" placeholder="Description" className="input input-bordered w-full max-w-x" value={description} onChange={(e)=>setDescription(e.target.value)}/>
