@@ -38,8 +38,8 @@ app.use((req, res, next) => {
     }
 });
 
-mongoose.connect(process.env.MONGODB_URL).
-then(() => {
+mongoose.connect(process.env.MONGODB_URL)
+.then(() => {
     console.log("Connected to MongoDB successfully");
 })
 .catch((error) => {
