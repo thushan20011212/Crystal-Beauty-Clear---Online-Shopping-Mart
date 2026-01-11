@@ -10,7 +10,7 @@ export function getProducts(req, res) {
         });
 }
 
-export function createProduct(req, res) {
+export function saveProduct(req, res) {
     const product = new Product({
         title: req.body.title,
         description: req.body.description,
