@@ -5,19 +5,20 @@ import { useNavigate } from "react-router-dom"
 
 
 
-export default function AddProductPage() {
+export default function EditProductPage() {
 
-    const [productId,setProductId] = useState('') 
-    const [name,setName] = useState('')
-    const [altNames,setAltNames] = useState('')
-    const [description,setDescription] = useState('')
+    const location = useLocation();
+    const [productId,setProductId] = useState(location.state.productId) 
+    const [name,setName] = useState(location.state.name)
+    const [altNames,setAltNames] = useState(location.state.altNames.join(","))
+    const [description,setDescription] = useState(location.state.description)
     const [images,setImages] = useState([])
-    const [labelledPrice,setLabelledPrice] = useState(0)
-    const [price,setPrice] = useState(0)
-    const [stock,setStock] = useState(0)
+    const [labelledPrice,setLabelledPrice] = useState(location.state.labelledPrice)
+    const [price,setPrice] = useState(location.state.price)
+    const [stock,setStock] = useState(location.state.stock)
     const navigate = useNavigate()
 
-    async function AddProduct() {
+    async function UpdateProduct() {
 
         const token = localStorage.getItem("token")
         if(token == null){
@@ -25,10 +26,7 @@ export default function AddProductPage() {
             return
         }
 
-        if (images.length <=0){
-            toast.error("Please Login First")
-            return
-        }
+        let imageUrls = location.state.images;
 
         const promisesArray = [];
 
@@ -36,7 +34,10 @@ export default function AddProductPage() {
             promisesArray[i] = mediaUpload(images[i]);
         }
         try{
-            const imageUrls = await promise.all(promisesArray);
+            if(images.length > 0){
+                imageUrls = await Promise.all(promisesArray);
+            }
+            
             console.log(imageUrls);
 
             const altNamesArray = altNames.split(",")
@@ -51,7 +52,7 @@ export default function AddProductPage() {
                 price : price,
                 stock : stock
             }
-            axios.post(import.meta.env.VITE_BACKEND_URL + "/api/products" , product , {
+            axios.put(import.meta.env.VITE_BACKEND_URL + "/api/products" , product , {
                 headers : {
                     "Authorization" : "Barer "+token
                 }
@@ -69,6 +70,7 @@ export default function AddProductPage() {
 
     return (
         <div className="w-full h-full flex-col justify-center items-center">
+            <div className="text-3xl font-bold mb-4">Edit Product</div>
             <input type="text" placeholder="Product Id" className="input input-bordered w-full max-w-x" value={productId} onChange={(e)=>setProductId(e.target.value)}/>
             <input type="text" placeholder="Name" className="input input-bordered w-full max-w-x" value={name} onChange={(e)=>setName(e.target.value)}/>
             <input type="text" placeholder="Alt Names" className="input input-bordered w-full max-w-x" value={altNames} onChange={(e)=>setAltNames(e.target.value)}/>
@@ -79,7 +81,7 @@ export default function AddProductPage() {
             <input type="number" placeholder="Stock" className="input input-bordered w-full max-w-x" value={stock} onChange={(e)=>setStock(e.target.value)}/>
             <div className="w-full flex justify-center flex-row items-center mt-4">
                 <Link to="/admin/products" className="bg-red-500 text-white font-bold py-2 px-4 rounded mr-4">Cancel</Link>
-                <button className="bg-green-500 text-white font-bold py-2 px-4 rounded" onClick={AddProduct}>Add Product</button>
+                <button className="bg-green-500 text-white font-bold py-2 px-4 rounded" onClick={UpdateProduct}>Update Product</button>
             </div>
         </div>
     )

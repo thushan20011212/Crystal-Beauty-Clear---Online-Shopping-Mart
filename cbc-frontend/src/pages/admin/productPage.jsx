@@ -1,9 +1,11 @@
-import { useEffect , useState } from "react";
+import { useEffect , useState , navigate } from "react";
 import axios from "axios";
+import { FaEdit } from "react-icons/fa";
 
-export default function AdminProductPage() {
+export default function ProductPage() {
 
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(
         () => { 
@@ -27,6 +29,7 @@ export default function AdminProductPage() {
                     <th>Labeled Price</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +42,16 @@ export default function AdminProductPage() {
                         <td>{item.labelledPrice}</td>
                         <td>{item.price}</td>
                         <td>{item.stock}</td>
+                        <td>
+                            <div className="flex justify-center items-center w-full">
+                                <FaTrash className="text-[20px] text-red-500 mx-2 cursor-pointer"/>
+                                <FaEdit onClick={() => {
+                                    navigate("/admin/editProduct/" , {
+                                        state : item
+                                    })
+                                }} className="text-[20px] text-blue-500 mx-2 cursor-pointer"/>
+                            </div>
+                        </td>
                     </tr>
                 ))}
             </tbody>
