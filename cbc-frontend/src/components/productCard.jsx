@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div
+    <Link to={"/overview/"+product.productId}
       className={`w-[280px] bg-white rounded-2xl shadow-lg overflow-hidden
       transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl
       ${!isAvailabel ? "opacity-60 pointer-events-none" : ""}`}
@@ -74,7 +74,7 @@ const ProductCard = ({ product }) => {
           Add to Cart
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 
