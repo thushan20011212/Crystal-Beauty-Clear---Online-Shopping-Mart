@@ -55,7 +55,26 @@ export default function ProductOverviewPage() {
 
                             <div className="w-full flex justify-center items-center mt-4">
                                 <button className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-accent/80 transition-all duration-300">Add to Cart</button>
-                                <button className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-secondary/80 transition-all duration-300">Buy Now</button>
+                                <button 
+                                    className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-secondary/80 transition-all duration-300"
+                                    onClick={ () => {
+                                        navigate("/checkout", { 
+                                            state: { 
+                                                cart: [
+                                                    {
+                                                        productId: product.productId,
+                                                        name: product.name,
+                                                        image: product.images[0],
+                                                        price: product.price,
+                                                        labelledPrice: product.labelledPrice,
+                                                        qty: 1
+                                                    },
+                                                ],
+                                            }, 
+                                        });
+                                    }}>
+                                        Buy Now
+                                    </button>
                             </div>
                         </div>
                     </div>
