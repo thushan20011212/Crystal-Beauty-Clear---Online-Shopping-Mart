@@ -1,6 +1,10 @@
 import Order from "../models/order.js";
 import Product from "../models/product.js";
 
+function isAdmin(req) {
+    return req.userData && req.userData.role === "admin";
+}
+
 export async function createOrder(req, res) {
     if (req.userData == null) {
         res.status(403).json({ message: "Forbidden - no user found" });
@@ -110,5 +114,39 @@ export async function getOrders(req, res) {
             message: "Internal server error",
             error: err
         });
+    }
+}
+
+
+export async function updateOrderStatus(req, res) {
+    if (!isAdmin(req)) {
+        res.status(403).json({
+            message: "Forbidden - you are not an admin"
+        })
+        return
+    }
+    try{
+        const orderId = req.params.orderId
+        const status = req.params.status
+
+        await Order.updateOne(
+            { orderId: orderId 
+
+            }, 
+            { status: status 
+
+            }
+        )
+
+        res.json({
+            message: "Order status updated successfully"
+        })
+
+    } catch(e) {
+        res.status(500).json({
+            message: "Internal server error",
+            error: e
+        })
+        return
     }
 }

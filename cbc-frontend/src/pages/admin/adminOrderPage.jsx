@@ -114,6 +114,46 @@ export default function AdminOrderPage() {
                     >
                       {activeOrder.status?.toUpperCase()}
                     </span>
+                    <select
+                      defaultValue=""
+                      onChange={async (e) => {
+                        const updatedValue = e.target.value;
+                        try{
+                          const token = localStorage.getItem("token");
+                          await axios.put(
+                            import.meta.env.VITE_BACKEND_URL + 
+                            "/api/orders/" +
+                            activeOrder.orderId +
+                            "/" +
+                            updatedValue,
+                          {},
+                          {
+                              headers: {
+                                Authorization: `Bearer ${token}`
+                              }
+                          }
+                          )
+
+                          toast.success("Order status updated successfully");
+                          const updatedOrder = {...activeOrder}
+                          updatedOrder.status = updatedValue;
+                          setActiveOrder(updatedOrder);
+                          
+                          // Refresh orders list
+                          await fetchOrders();
+
+                        } catch (e) {
+                          console.error("Error updating order status:", e);
+                          toast.error("Failed to update order status");
+                        }
+                      }}
+                    >
+                    <option value="">Change Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="canceled">Canceled</option>
+                    <option value="returned">Returned</option>
+                    </select>
                   </div>
 
                   {/* Customer Info Grid */}
