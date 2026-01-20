@@ -214,13 +214,14 @@ export async function resetPassword(req,res){
     const email = req.body.email;
     const newPassword = req.body.newPassword;
 
-    const response = OTP.findOne({
+    const response = await OTP.findOne({
         email : email,
     })
     if (response == null) {
         res.status(500).json({
             message : "No otp request found please try again"
         })
+        return
     }
     if(otp == response.otp){
         await OTP.deleteMany(
@@ -229,7 +230,7 @@ export async function resetPassword(req,res){
             }
         ) 
         const hashedPassword = bcrypt.hashSync(newPassword, 10);
-        const response2 = User.updateOne(
+        const response2 = await User.updateOne(
             {
                 email: email
             },
