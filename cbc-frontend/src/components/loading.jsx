@@ -1,7 +1,7 @@
 export default function Loading({ fullScreen = true, message = "" }) {
     const containerClass = fullScreen 
         ? "fixed inset-0 bg-primary z-50 flex items-center justify-center" 
-        : "flex items-center justify-center w-full h-full min-h-[50vh]";
+        : "flex items-center justify-center w-full h-full min-h-[50vh]"
 
     return (
         <div className={containerClass}>
@@ -29,5 +29,5 @@ export default function Loading({ fullScreen = true, message = "" }) {
                 )}
             </div>
         </div>
-    );
+    )
 }

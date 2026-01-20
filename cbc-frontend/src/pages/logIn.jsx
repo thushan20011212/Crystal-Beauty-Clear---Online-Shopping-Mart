@@ -1,42 +1,42 @@
-import { useState } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom";
-import { FaGoogle } from "react-icons/fa";
+import { useState } from "react"
+import { useGoogleLogin } from "@react-oauth/google"
+import axios from "axios"
+import { toast } from "react-hot-toast"
+import { useNavigate, Link } from "react-router-dom"
+import { FaGoogle } from "react-icons/fa"
 
 export default function LogInPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
   const googleLogin = useGoogleLogin({
     onSuccess: (response) => {
-      const accessToken = response.access_token;
+      const accessToken = response.access_token
       axios.post(import.meta.env.VITE_BACKEND_URL + "/api/user/login/google", {
           accessToken: accessToken,
         })
         .then((response) => {
-          toast.success("Login successful!");
-          const token = response.data.token;
-          localStorage.setItem("token", token);
+          toast.success("Login successful!")
+          const token = response.data.token
+          localStorage.setItem("token", token)
           if (response.data.role === "admin") {
-            navigate("/admin/");
+            navigate("/admin/")
           } else {
-            navigate("/");
+            navigate("/")
           }
         })
     },
-  });
+  })
 
   async function handleLogIn() {
     if (!email || !password) {
-      toast.error("Please enter email and password");
-      return;
+      toast.error("Please enter email and password")
+      return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/user/login",
@@ -44,28 +44,27 @@ export default function LogInPage() {
           email,
           password,
         }
-      );
-      toast.success("Login successful!");
-      localStorage.setItem("token", response.data.token);
+      )
+      toast.success("Login successful!")
+      localStorage.setItem("token", response.data.token)
 
       if (response.data.role === "admin") {
-        navigate("/admin/");
+        navigate("/admin/")
       } else {
-        navigate("/");
+        navigate("/")
       }
     } catch (error) {
-      console.log("Login error:", error);
-      const errorMessage = error.response?.data?.message;
+      const errorMessage = error.response?.data?.message
       
       if (errorMessage === "Incorrect password") {
-        toast.error("Wrong password! Please try again.");
+        toast.error("Wrong password! Please try again.")
       } else if (errorMessage === "User not found") {
-        toast.error("No account found with this email.");
+        toast.error("No account found with this email.")
       } else {
-        toast.error(errorMessage || "Login failed. Please try again.");
+        toast.error(errorMessage || "Login failed. Please try again.")
       }
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 

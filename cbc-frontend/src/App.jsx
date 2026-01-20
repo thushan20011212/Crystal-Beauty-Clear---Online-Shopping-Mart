@@ -1,12 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import AdminPage from "./pages/adminPage";
-import HomePage from "./pages/home";
-import LogInPage from "./pages/logIn";
-import ForgetPasswordPage from "./pages/forgetPasswordPage";
-import RegisterPage from "./pages/register";
-import { Toaster } from "react-hot-toast";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import "./App.css"
+import AdminPage from "./pages/adminPage"
+import HomePage from "./pages/home"
+import LogInPage from "./pages/logIn"
+import ForgetPasswordPage from "./pages/forgetPasswordPage"
+import RegisterPage from "./pages/register"
+import { Toaster } from "react-hot-toast"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 function App() {
     return (
@@ -24,7 +24,7 @@ function App() {
                 </div>
             </BrowserRouter>
         </GoogleOAuthProvider>
-    );
+    )
 }
 
-export default App;
+export default App

@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { addToCart } from "../utils/cart.js";
-import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom"
+import { addToCart } from "../utils/cart.js"
+import { toast } from "react-hot-toast"
 
 const ProductCard = ({ product }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     name,
     description,
@@ -12,18 +12,18 @@ const ProductCard = ({ product }) => {
     image,
     stock,
     isAvailabel,
-  } = product;
+  } = product
 
   const handleAddToCart = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(product, 1);
-    toast.success(`${name} added to cart!`);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    addToCart(product, 1)
+    toast.success(`${name} added to cart!`)
+  }
 
   const handleBuyNow = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
     navigate("/checkout", {
       state: {
         cart: [
@@ -37,8 +37,8 @@ const ProductCard = ({ product }) => {
           }
         ]
       }
-    });
-  };
+    })
+  }
 
   return (
     <Link to={"/overview/"+product.productId} className="block">
@@ -54,7 +54,7 @@ const ProductCard = ({ product }) => {
             alt={name}
             className="w-full h-full object-cover"
             onError={(e) => {
-              e.target.src = "/placeholder.svg";
+              e.target.src = "/placeholder.svg"
             }}
           />
 
@@ -121,7 +121,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
     </Link>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard
