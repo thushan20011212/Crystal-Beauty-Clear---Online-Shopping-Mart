@@ -8,7 +8,7 @@ export default function SearchProductPage() {
     const [query, setQuery] = useState("");
 
     return (
-        <div className="w-full h-full p-6 bg-gray-50">
+        <div className="w-full h-full p-6 bg-gray-60">
             <input
                 type="text"
                 placeholder="Search for products..."
