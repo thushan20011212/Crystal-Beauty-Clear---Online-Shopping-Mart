@@ -1,9 +1,12 @@
 import Order from "../models/order.js";
 import Product from "../models/product.js";
 
+// Helper function to check if user is admin
 function isAdmin(req) {
     return req.userData && req.userData.role === "admin";
 }
+
+
 
 export async function createOrder(req, res) {
     if (req.userData == null) {
@@ -95,58 +98,73 @@ export async function createOrder(req, res) {
 }
 
 export async function getOrders(req, res) {
+    // Check if user is authenticated
     if (req.userData == null) {
-        res.status(403).json({ 
-            message: "Forbidden - no user found" });
-        return;
+        return res.status(403).json({ 
+            message: "Forbidden - authentication required" 
+        });
     }
 
     try {
-        if (req.userData.role === "admin") {
+        if (isAdmin(req)) {
+            // Admin sees all orders
             const orders = await Order.find();
             res.json(orders);
         } else {
+            // Regular users see only their own orders
             const orders = await Order.find({ email: req.userData.email });
             res.json(orders);
         }
     } catch (err) {
         res.status(500).json({
             message: "Internal server error",
-            error: err
+            error: err.message
         });
     }
 }
 
 
 export async function updateOrderStatus(req, res) {
+    // Check if user is admin
     if (!isAdmin(req)) {
-        res.status(403).json({
+        return res.status(403).json({
             message: "Forbidden - you are not an admin"
-        })
-        return
+        });
     }
-    try{
-        const orderId = req.params.orderId
-        const status = req.params.status
+    
+    try {
+        const orderId = req.params.orderId;
+        const status = req.params.status;
 
-        await Order.updateOne(
-            { orderId: orderId 
+        // Validate status value
+        const validStatuses = ["pending", "processing", "shipped", "delivered", "cancelled"];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({
+                message: "Invalid status. Must be one of: " + validStatuses.join(", ")
+            });
+        }
 
-            }, 
-            { status: status 
+        const updatedOrder = await Order.findOneAndUpdate(
+            { orderId: orderId }, 
+            { status: status },
+            { new: true }
+        );
 
-            }
-        )
+        if (!updatedOrder) {
+            return res.status(404).json({
+                message: "Order not found"
+            });
+        }
 
         res.json({
-            message: "Order status updated successfully"
-        })
+            message: "Order status updated successfully",
+            order: updatedOrder
+        });
 
-    } catch(e) {
+    } catch (e) {
         res.status(500).json({
             message: "Internal server error",
-            error: e
-        })
-        return
+            error: e.message
+        });
     }
 }
