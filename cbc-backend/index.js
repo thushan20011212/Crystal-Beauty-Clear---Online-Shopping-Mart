@@ -5,8 +5,12 @@ import mongoose from 'mongoose';
 import userRouter from './routes/userRouter.js';
 import productRouter from './routes/productRouter.js';
 import orderRouter from './routes/orderRouter.js';
+import reviewRouter from './routes/reviewRouter.js';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import dns from "dns";
+
+dns.setDefaultResultOrder("ipv4first");
 
 dotenv.config(); // Must be first
 
@@ -34,10 +38,19 @@ app.use((req, res, next) => {
   }
 });
 
+// Define all routes BEFORE starting the server
+app.use('/api/user', userRouter);
+app.use('/api/product', productRouter);
+app.use('/api/products', productRouter); // Alias for /api/products (same as /api/product)
+app.use('/api/order', orderRouter);
+app.use('/api/orders', orderRouter); // Alias for /api/orders (same as /api/order)
+app.use('/api/review', reviewRouter);
+app.use('/api/reviews', reviewRouter); // Alias for /api/reviews (same as /api/review)
+
 // Connect to MongoDB and start server
 async function startServer() {
   try {
-    await mongoose.connect(process.env.MONGODB_URL.trim()); // Remove accidental spaces/newlines
+    await mongoose.connect(process.env.MONGODB_URL.trim());
     console.log("✅ Connected to MongoDB successfully");
 
     app.listen(5001, () => {
@@ -49,9 +62,3 @@ async function startServer() {
 }
 
 startServer();
-
-app.use('/api/user', userRouter);
-app.use('/api/product', productRouter);
-app.use('/api/products', productRouter); // Alias for /api/products (same as /api/product)
-app.use('/api/order', orderRouter);
-app.use('/api/orders', orderRouter); // Alias for /api/orders (same as /api/order)

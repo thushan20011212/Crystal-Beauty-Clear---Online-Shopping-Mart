@@ -6,6 +6,7 @@ import AdminProductPage from "./admin/productPage";
 import AddProductPage from "./admin/addProductPage";
 import EditProductPage from "./admin/editProductPage";
 import AdminOrderPage from "./admin/adminOrderPage";
+import AdminReviewPage from "./admin/adminReviewPage";
 import toast from "react-hot-toast";
 import Loading from "../components/loading";
 
@@ -86,7 +87,7 @@ export default function AdminPage() {
             <Route path="/products" element={<AdminProductPage />} />
             <Route path="/orders" element={<AdminOrderPage />} />
             <Route path="/users" element={<h1>Admin Users</h1>} />
-            <Route path="/reviews" element={<h1>Admin Reviews</h1>} />
+            <Route path="/reviews" element={<AdminReviewPage />} />
             <Route path="/addProductPage" element={<AddProductPage />} />
             <Route path="/editProductPage/:id" element={<EditProductPage />} />
           </Routes>
