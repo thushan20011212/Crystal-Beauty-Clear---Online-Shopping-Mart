@@ -13,7 +13,7 @@ function App() {
   
 
   return (
-  <GoogleOAuthProvider clientId="490059930683-h5l2p0p227g9jm3l3vjdpr5qtp72ue3q.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
    <BrowserRouter>
       <div>
         <Toaster/>
