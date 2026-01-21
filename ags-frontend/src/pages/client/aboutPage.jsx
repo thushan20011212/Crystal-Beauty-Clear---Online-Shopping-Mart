@@ -12,7 +12,7 @@ export default function AboutPage() {
                     <div className="text-center space-y-4">
                         <h1 className="text-5xl md:text-6xl font-bold text-secondary">About Us</h1>
                         <p className="text-xl text-muted max-w-3xl mx-auto">
-                            Discover the story behind Crystal Beauty Clear and our commitment to bringing you premium beauty products
+                            Discover the story behind Avanaa Glowy Square and our commitment to bringing you premium beauty products
                         </p>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ export default function AboutPage() {
                         </h2>
                         <div className="space-y-4 text-lg text-muted leading-relaxed">
                             <p>
-                                Crystal Beauty Clear was founded with a simple yet powerful vision: to make premium beauty products 
+                                Avanaa Glowy Square was founded with a simple yet powerful vision: to make premium beauty products 
                                 accessible to everyone who values quality and authenticity.
                             </p>
                             <p>
@@ -124,7 +124,7 @@ export default function AboutPage() {
             {/* Why Choose Us Section */}
             <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">Why Choose Crystal Beauty Clear?</h2>
+                    <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">Why Choose Avanaa Glowy Square?</h2>
                     <p className="text-xl text-muted max-w-2xl mx-auto">
                         Experience the difference of shopping with a brand that truly cares
                     </p>

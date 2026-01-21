@@ -87,7 +87,7 @@ export default function RegisterPage() {
             <div className="space-y-3">
               <h2 className="text-4xl font-bold">Join Us Today</h2>
               <p className="text-lg text-accent max-w-md">
-                Become part of the Crystal Beauty Clear family
+                Become part of the Avanaa Glowy Square family
               </p>
             </div>
             <div className="pt-4">

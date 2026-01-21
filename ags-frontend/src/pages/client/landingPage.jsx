@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import ProductCard from "../../components/productCard";
-import Splash from "../../components/splash";
+import { useState, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import ProductCard from "../../components/productCard"
+import Splash from "../../components/splash"
+
+// Avanaa Glowy Square Landing Page
+export default function LandingPage() {
 
 // Crystal Beauty Clear Landing Page
 export default function LandingPage() {
@@ -142,7 +145,7 @@ export default function LandingPage() {
                                 {/* Main Hero Image */}
                                 <img 
                                     src="/images/image (1).jpg" 
-                                    alt="Crystal Beauty Clear Premium Cosmetics" 
+                                    alt="Avanaa Glowy Square Premium Cosmetics" 
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                                 {/* Enhanced Gradient Overlay */}
@@ -172,7 +175,7 @@ export default function LandingPage() {
                                 Beauty That Speaks For Itself
                             </h2>
                             <p className="text-lg text-muted leading-relaxed">
-                                At Crystal Beauty Clear, we believe that true beauty comes from confidence and authenticity. 
+                                At Avanaa Glowy Square, we believe that true beauty comes from confidence and authenticity. 
                                 Our carefully curated collection combines the finest ingredients with cutting-edge formulations 
                                 to bring out your natural radiance.
                             </p>
@@ -420,7 +423,7 @@ export default function LandingPage() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                         {/* Brand */}
                         <div className="space-y-4">
-                            <h3 className="text-2xl font-bold">Crystal Beauty Clear</h3>
+                            <h3 className="text-2xl font-bold">Avanaa Glowy Square</h3>
                             <p className="text-accent text-sm">
                                 Your trusted source for premium cosmetics and beauty products.
                             </p>
@@ -467,7 +470,7 @@ export default function LandingPage() {
 
                     <div className="border-t border-accent pt-8 text-center">
                         <p className="text-accent text-sm">
-                            © 2026 Crystal Beauty Clear. All rights reserved.
+                            © 2026 Avanaa Glowy Square. All rights reserved.
                         </p>
                     </div>
                 </div>

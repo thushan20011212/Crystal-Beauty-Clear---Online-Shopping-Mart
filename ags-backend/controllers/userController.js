@@ -1,12 +1,14 @@
-import User from '../models/user.js';
-import OTP from '../models/otp.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import axios from 'axios';
-import dotenv from 'dotenv';
+import User from '../models/user.js'
+import Order from '../models/order.js'
+import Review from '../models/review.js'
+import OTP from '../models/otp.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import nodemailer from 'nodemailer'
+import axios from 'axios'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 // Create a new user
 export function createUser(req, res) {
@@ -170,7 +172,7 @@ export async function sendOTP(req,res) {
     const message ={
         from : process.env.GMAIL_USER,
         to: email,
-        subject: 'Resetting Password For Crystal Beauty Clear',
+        subject: 'Resetting Password For Avanaa Glowy Square',
         text: "Your OTP for password reset is: " + randomOTP
     }
 
@@ -318,34 +320,52 @@ export async function updateUserRole(req, res) {
 }
 
 // Delete user (Admin only)
+// Also deletes all related orders and reviews
 export async function deleteUser(req, res) {
     try {
         // Check if user is authenticated and is admin
         if (!req.userData || req.userData.role !== "admin") {
             return res.status(403).json({
                 message: "Access denied. Admin privileges required."
-            });
+            })
         }
 
-        const { userId } = req.params;
+        const { userId } = req.params
 
-        const user = await User.findByIdAndDelete(userId);
+        // Find user first to get their email
+        const user = await User.findById(userId)
 
         if (!user) {
             return res.status(404).json({
                 message: "User not found"
-            });
+            })
         }
 
+        const userEmail = user.email
+
+        // Delete all orders associated with this user's email
+        const deletedOrders = await Order.deleteMany({ email: userEmail })
+        
+        // Delete all reviews associated with this user's email
+        const deletedReviews = await Review.deleteMany({ email: userEmail })
+
+        // Finally, delete the user
+        await User.findByIdAndDelete(userId)
+
         res.status(200).json({
-            message: "User deleted successfully"
-        });
+            message: "User and all related data deleted successfully",
+            deletedData: {
+                user: user.email,
+                ordersDeleted: deletedOrders.deletedCount,
+                reviewsDeleted: deletedReviews.deletedCount
+            }
+        })
 
     } catch (error) {
-        console.error("Delete user error:", error.message);
+        console.error("Delete user error:", error.message)
         res.status(500).json({
             message: "Failed to delete user",
             error: error.message
-        });
+        })
     }
 }

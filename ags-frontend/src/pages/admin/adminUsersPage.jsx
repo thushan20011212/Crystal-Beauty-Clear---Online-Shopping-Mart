@@ -107,25 +107,37 @@ export default function AdminUsersPage() {
     }
 
     async function deleteUser(userId) {
-        if (!window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
-            return;
+        if (!window.confirm("⚠️ WARNING: Are you sure you want to delete this user?\n\nThis will also delete:\n• All orders placed by this user\n• All reviews written by this user\n\nThis action cannot be undone!")) {
+            return
         }
 
         try {
-            const token = localStorage.getItem("token");
-            await axios.delete(
+            const token = localStorage.getItem("token")
+            const response = await axios.delete(
                 import.meta.env.VITE_BACKEND_URL + "/api/user/admin/" + userId,
                 {
                     headers: { Authorization: "Bearer " + token }
                 }
-            );
+            )
 
-            toast.success("User deleted successfully");
-            await fetchUsers();
-            closeModal();
+            // Show detailed feedback
+            const deletedData = response.data.deletedData
+            if (deletedData) {
+                toast.success(
+                    `User deleted successfully!\n` +
+                    `Orders deleted: ${deletedData.ordersDeleted}\n` +
+                    `Reviews deleted: ${deletedData.reviewsDeleted}`,
+                    { duration: 5000 }
+                )
+            } else {
+                toast.success("User deleted successfully")
+            }
+
+            await fetchUsers()
+            closeModal()
         } catch (error) {
-            console.error("Error deleting user:", error);
-            toast.error(error.response?.data?.message || "Failed to delete user");
+            console.error("Error deleting user:", error)
+            toast.error(error.response?.data?.message || "Failed to delete user")
         }
     }
 
