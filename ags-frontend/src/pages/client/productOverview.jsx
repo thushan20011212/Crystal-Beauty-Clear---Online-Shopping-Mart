@@ -237,7 +237,8 @@ export default function ProductOverviewPage() {
                     {/* ===== REVIEWS SECTION ===== */}
                     <section className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-8 md:py-12">
                         <div className="max-w-7xl mx-auto">
-                            <div className="max-w-3xl">
+                            {/* On mobile, full width. On desktop, align with image slider (45% width) */}
+                            <div className="w-full md:w-[45%]">
                             
                                 {/* Reviews Header */}
                                 <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-6">

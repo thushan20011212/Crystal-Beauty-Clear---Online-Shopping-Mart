@@ -9,6 +9,7 @@ export default function LogInPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showPasswordError, setShowPasswordError] = useState(false)
   const navigate = useNavigate()
 
   const googleLogin = useGoogleLogin({
@@ -31,8 +32,26 @@ export default function LogInPage() {
   })
 
   async function handleLogIn() {
+    // Validate email
     if (!email || !password) {
       toast.error("Please enter email and password")
+      return
+    }
+
+    // Email validation: must contain @ and .
+    if (!email.includes("@") || !email.includes(".")) {
+      toast.error("Please enter a valid email address (must contain @ and .)")
+      return
+    }
+
+    // Password validation: at least 6 characters with at least 1 number
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long")
+      return
+    }
+
+    if (!/\d/.test(password)) {
+      toast.error("Password must contain at least 1 number")
       return
     }
 
@@ -57,10 +76,15 @@ export default function LogInPage() {
       const errorMessage = error.response?.data?.message
       
       if (errorMessage === "Incorrect password") {
-        toast.error("Wrong password! Please try again.")
+        setShowPasswordError(true)
+        toast.error("Wrong password! Click 'Forgot password?' to reset.", {
+          duration: 5000,
+        })
       } else if (errorMessage === "User not found") {
+        setShowPasswordError(false)
         toast.error("No account found with this email.")
       } else {
+        setShowPasswordError(false)
         toast.error(errorMessage || "Login failed. Please try again.")
       }
     } finally {
@@ -150,13 +174,37 @@ export default function LogInPage() {
                   </Link>
                 </div>
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    setShowPasswordError(false)
+                  }}
                   value={password}
                   type="password"
                   placeholder="Enter your password"
                   className="w-full h-12 border-2 border-accent rounded-xl px-4 text-base bg-primary focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition"
                 />
               </div>
+
+              {/* Wrong Password Alert */}
+              {showPasswordError && (
+                <div className="bg-secondary/5 border-2 border-secondary rounded-xl p-4 animate-fadeIn">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">🔐</div>
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-secondary mb-1">Wrong Password?</h3>
+                      <p className="text-xs text-muted mb-3">
+                        Don't worry! You can reset your password easily.
+                      </p>
+                      <Link
+                        to="/forgot-password"
+                        className="inline-block w-full text-center py-2 px-4 bg-secondary text-neutral text-sm font-semibold rounded-lg hover:bg-muted transition-all duration-300"
+                      >
+                        Reset Password Now
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Login Button */}
               <button

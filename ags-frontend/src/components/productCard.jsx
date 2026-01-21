@@ -41,14 +41,14 @@ const ProductCard = ({ product }) => {
   }
 
   return (
-    <Link to={"/overview/"+product.productId} className="block">
+    <Link to={"/overview/"+product.productId} className="block w-full h-full">
       <div
-        className={`w-[280px] bg-neutral rounded-2xl shadow-lg overflow-hidden
+        className={`w-full h-full flex flex-col bg-neutral rounded-2xl shadow-lg overflow-hidden
         transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl
         ${!isAvailable ? "opacity-60 pointer-events-none" : ""}`}
       >
-        {/* Image */}
-        <div className="relative h-52 bg-primary">
+        {/* Image - Fixed Height */}
+        <div className="relative h-52 bg-primary shrink-0">
           <img
             src={image?.[0] || "/placeholder.svg"}
             alt={name}
@@ -65,18 +65,20 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        {/* Content */}
-        <div className="p-4 space-y-3">
-          <h3 className="text-lg font-semibold text-secondary hover:text-muted">
+        {/* Content - Flex Grow */}
+        <div className="flex flex-col grow p-4">
+          {/* Title - Fixed Height */}
+          <h3 className="text-lg font-semibold text-secondary hover:text-muted line-clamp-2 h-14 mb-2">
             {name}
           </h3>
 
-          <p className="text-sm text-muted leading-relaxed">
+          {/* Description - Fixed Height */}
+          <p className="text-sm text-muted leading-relaxed line-clamp-3 h-18 mb-3">
             {description}
           </p>
 
-          {/* Price */}
-          <div className="flex items-center gap-2">
+          {/* Price - Fixed Height */}
+          <div className="flex items-center gap-2 h-7 mb-2">
             <span className="text-lg font-bold text-secondary">
               ₨{price?.toFixed(2)}
             </span>
@@ -88,17 +90,17 @@ const ProductCard = ({ product }) => {
             )}
           </div>
 
-          {/* Stock */}
+          {/* Stock - Fixed Height */}
           <div
-            className={`text-sm font-medium ${
+            className={`text-sm font-medium h-5 mb-3 ${
               stock > 0 ? "text-secondary" : "text-muted"
             }`}
           >
-            {stock > 0 ? `${stock} in stock` : "No stock available"}
+            {stock > 0 ? "In Stock" : "Out of Stock"}
           </div>
 
-          {/* Buttons */}
-          <div className="flex gap-2 mt-2">
+          {/* Buttons - Push to bottom */}
+          <div className="flex gap-2 mt-auto">
             <button
               disabled={!isAvailable || stock === 0}
               className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold

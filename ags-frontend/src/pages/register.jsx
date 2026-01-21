@@ -44,8 +44,26 @@ export default function RegisterPage() {
   });
 
   async function handleRegister() {
+    // Check if all fields are filled
     if (!email || !firstName || !lastName || !password) {
       toast.error("Please fill in all fields");
+      return;
+    }
+
+    // Email validation: must contain @ and .
+    if (!email.includes("@") || !email.includes(".")) {
+      toast.error("Please enter a valid email address (must contain @ and .)");
+      return;
+    }
+
+    // Password validation: at least 6 characters with at least 1 number
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (!/\d/.test(password)) {
+      toast.error("Password must contain at least 1 number");
       return;
     }
 
@@ -161,6 +179,7 @@ export default function RegisterPage() {
                   placeholder="john@example.com"
                   className="w-full h-11 border-2 border-accent rounded-xl px-4 text-sm bg-primary focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition"
                 />
+                <p className="text-xs text-muted">Must contain @ and .</p>
               </div>
 
               {/* Password Input */}
@@ -173,7 +192,7 @@ export default function RegisterPage() {
                   placeholder="Create a strong password"
                   className="w-full h-11 border-2 border-accent rounded-xl px-4 text-sm bg-primary focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition"
                 />
-                <p className="text-xs text-muted">Must be at least 8 characters</p>
+                <p className="text-xs text-muted">At least 6 characters with 1 number</p>
               </div>
 
               {/* Register Button */}
@@ -202,11 +221,9 @@ export default function RegisterPage() {
 
               {/* Google Register Button */}
               <button
-                onClick={() => {
-                  toast.error("Google registration backend endpoint not yet configured. Please use email/password registration.");
-                }}
-                disabled={true}
-                className="w-full h-11 border-2 border-accent bg-primary text-secondary font-semibold rounded-xl hover:bg-accent/10 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 opacity-60 cursor-not-allowed"
+                onClick={() => googleLogin()}
+                disabled={isLoading}
+                className="w-full h-11 border-2 border-accent bg-primary text-secondary font-semibold rounded-xl hover:bg-accent/10 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FaGoogle className="text-lg" />
                 Sign up with Google
