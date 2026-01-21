@@ -26,7 +26,7 @@ export function saveProduct(req, res) {
         price: req.body.price,
         image: req.body.image,
         stock: req.body.stock,
-        isAvailabel: req.body.isAvailabel,
+        isAvailable: req.body.isAvailable,
     });
 
     product.save().then(() => {
@@ -60,7 +60,7 @@ export function updateProduct(req, res) {
         price: req.body.price,
         image: req.body.image,
         stock: req.body.stock,
-        isAvailabel: req.body.isAvailabel,
+        isAvailable: req.body.isAvailable,
     };
     
     // Try to update by MongoDB _id first if it's a valid ObjectId
@@ -229,7 +229,7 @@ export async function searchProducts(req, res) {
                 { name: { $regex: searchQuery, $options: "i" } },
                 { altNames: { $elemMatch: { $regex: searchQuery, $options: "i" } } }
             ],
-            isAvailabel: true
+            isAvailable: true
         });
         res.status(200).json(products);
     } catch (error) {

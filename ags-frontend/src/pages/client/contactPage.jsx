@@ -158,8 +158,8 @@ export default function ContactPage() {
                                     <div className="space-y-2">
                                         <h3 className="text-xl font-bold text-secondary">Email Us</h3>
                                         <p className="text-muted">We typically respond within 24 hours</p>
-                                        <a href="mailto:support@crystalbeautyclear.com" className="text-secondary font-semibold hover:underline">
-                                            support@crystalbeautyclear.com
+                                        <a href="mailto:support@avanaaglowysquare.com" className="text-secondary font-semibold hover:underline">
+                                            support@avanaaglowysquare.com
                                         </a>
                                     </div>
                                 </div>

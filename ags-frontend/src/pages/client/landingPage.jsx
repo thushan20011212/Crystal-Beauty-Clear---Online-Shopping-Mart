@@ -7,7 +7,7 @@ import Splash from "../../components/splash"
 // Avanaa Glowy Square Landing Page
 export default function LandingPage() {
 
-// Crystal Beauty Clear Landing Page
+// Avanaa Glowy Square Landing Page
 export default function LandingPage() {
     const navigate = useNavigate();
     const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -44,10 +44,10 @@ export default function LandingPage() {
                     {/* Brand Name with Animation */}
                     <div className="space-y-2">
                         <h1 className="text-6xl md:text-8xl font-bold text-secondary tracking-tight">
-                            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Crystal</span>
+                            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Avanaa</span>
                         </h1>
                         <h1 className="text-6xl md:text-8xl font-bold text-secondary tracking-tight">
-                            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.4s' }}>Beauty Clear</span>
+                            <span className="inline-block animate-fade-in" style={{ animationDelay: '0.4s' }}>Glowy Square</span>
                         </h1>
                     </div>
                     
@@ -81,9 +81,9 @@ export default function LandingPage() {
                             </div>
                             
                             <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-secondary leading-tight">
-                                <span className="inline-block hover:scale-110 transition-transform duration-300">Crystal</span>
+                                <span className="inline-block hover:scale-110 transition-transform duration-300">Avanaa</span>
                                 <span className="block bg-gradient-to-r from-secondary via-muted to-secondary bg-clip-text text-transparent mt-2">
-                                    Beauty Clear
+                                    Glowy Square
                                 </span>
                             </h1>
                             
@@ -313,7 +313,7 @@ export default function LandingPage() {
                         <div className="inline-block px-4 py-2 bg-secondary text-neutral rounded-full text-sm font-semibold uppercase tracking-wider mb-4">
                             Why Choose Us
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">The Crystal Beauty Difference</h2>
+                        <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-4">The Avanaa Glowy Difference</h2>
                         <p className="text-xl text-muted max-w-2xl mx-auto">Experience exceptional quality and service with every purchase</p>
                     </div>
 

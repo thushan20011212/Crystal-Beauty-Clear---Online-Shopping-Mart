@@ -9,10 +9,10 @@ export default function Loading({ fullScreen = true, message = "" }) {
                 {/* Brand Name with Animation */}
                 <div className="space-y-2">
                     <h1 className="text-4xl md:text-6xl font-bold text-secondary tracking-tight">
-                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.1s' }}>Crystal</span>
+                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.1s' }}>Avanaa</span>
                     </h1>
                     <h1 className="text-4xl md:text-6xl font-bold text-secondary tracking-tight">
-                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Beauty Clear</span>
+                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Glowy Square</span>
                     </h1>
                 </div>
                 

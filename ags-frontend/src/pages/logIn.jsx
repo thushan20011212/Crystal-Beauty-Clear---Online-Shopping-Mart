@@ -80,8 +80,8 @@ export default function LogInPage() {
           
           <div className="relative z-10 space-y-8 text-center">
             <div className="space-y-4">
-              <h2 className="text-5xl font-bold">Crystal</h2>
-              <h2 className="text-5xl font-bold">Beauty Clear</h2>
+              <h2 className="text-5xl font-bold">Avanaa</h2>
+              <h2 className="text-5xl font-bold">Glowy Square</h2>
             </div>
             <p className="text-xl text-accent max-w-md">
               Premium cosmetics for your natural beauty

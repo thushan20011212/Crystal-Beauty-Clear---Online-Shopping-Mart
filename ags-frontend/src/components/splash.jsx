@@ -15,10 +15,10 @@ export default function Splash({ onComplete }) {
                 {/* Brand Name with Animation */}
                 <div className="space-y-2">
                     <h1 className="text-6xl md:text-8xl font-bold text-secondary tracking-tight">
-                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Crystal</span>
+                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.2s' }}>Avanaa</span>
                     </h1>
                     <h1 className="text-6xl md:text-8xl font-bold text-secondary tracking-tight">
-                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.4s' }}>Beauty Clear</span>
+                        <span className="inline-block animate-fade-in" style={{ animationDelay: '0.4s' }}>Glowy Square</span>
                     </h1>
                 </div>
                 

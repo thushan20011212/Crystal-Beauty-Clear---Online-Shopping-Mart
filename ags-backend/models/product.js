@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    isAvailabel: {
+    isAvailable: {
       type: Boolean,
       required: true,
       default: true,

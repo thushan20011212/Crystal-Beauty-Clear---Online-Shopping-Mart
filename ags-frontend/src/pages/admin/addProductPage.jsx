@@ -56,7 +56,7 @@ export default function AddProductPage() {
                 labelledPrice: parseFloat(labelledPrice),
                 price: parseFloat(price),
                 stock: parseInt(stock),
-                isAvailabel: true
+                isAvailable: true
             };
             
             console.log("Product being sent:", product);

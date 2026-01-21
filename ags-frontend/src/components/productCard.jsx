@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
     labelledPrice,
     image,
     stock,
-    isAvailabel,
+    isAvailable,
   } = product
 
   const handleAddToCart = (e) => {
@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
       <div
         className={`w-[280px] bg-neutral rounded-2xl shadow-lg overflow-hidden
         transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl
-        ${!isAvailabel ? "opacity-60 pointer-events-none" : ""}`}
+        ${!isAvailable ? "opacity-60 pointer-events-none" : ""}`}
       >
         {/* Image */}
         <div className="relative h-52 bg-primary">
@@ -58,7 +58,7 @@ const ProductCard = ({ product }) => {
             }}
           />
 
-          {!isAvailabel && (
+          {!isAvailable && (
             <span className="absolute top-3 left-3 bg-secondary text-neutral text-xs font-semibold px-3 py-1 rounded-full">
               Out of Stock
             </span>
@@ -100,7 +100,7 @@ const ProductCard = ({ product }) => {
           {/* Buttons */}
           <div className="flex gap-2 mt-2">
             <button
-              disabled={!isAvailabel || stock === 0}
+              disabled={!isAvailable || stock === 0}
               className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold
               bg-secondary text-neutral transition-colors
               hover:bg-muted disabled:bg-accent disabled:cursor-not-allowed"
@@ -109,7 +109,7 @@ const ProductCard = ({ product }) => {
               Add to Cart
             </button>
             <button
-              disabled={!isAvailabel || stock === 0}
+              disabled={!isAvailable || stock === 0}
               className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold
               bg-accent text-secondary transition-colors
               hover:bg-secondary hover:text-neutral disabled:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
