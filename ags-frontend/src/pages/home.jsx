@@ -8,6 +8,7 @@ import CheckOutPage from "./client/checkOut.jsx";
 import LandingPage from "./client/landingPage.jsx";
 import AboutPage from "./client/aboutPage.jsx";
 import ContactPage from "./client/contactPage.jsx";
+import OrderHistoryPage from "./client/orderHistory.jsx";
 
 
 export default function HomePage() {
@@ -24,6 +25,7 @@ export default function HomePage() {
                 <Route path="/overview/:id" element={<ProductOverviewPage />} />
                 <Route path="/checkout" element={<CheckOutPage/>} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/orders" element={<OrderHistoryPage />} />
                 <Route path="*" element={<h1 className="text-secondary text-3xl font-bold mt-10">404 not found</h1>} />
             </Routes>
         </div>

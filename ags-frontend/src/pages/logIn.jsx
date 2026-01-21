@@ -21,7 +21,7 @@ export default function LogInPage() {
         .then((response) => {
           toast.success("Login successful!")
           const token = response.data.token
-          localStorage.setItem("token", token)
+          sessionStorage.setItem("token", token)
           if (response.data.role === "admin") {
             navigate("/admin/")
           } else {
@@ -65,7 +65,7 @@ export default function LogInPage() {
         }
       )
       toast.success("Login successful!")
-      localStorage.setItem("token", response.data.token)
+      sessionStorage.setItem("token", response.data.token)
 
       if (response.data.role === "admin") {
         navigate("/admin/")

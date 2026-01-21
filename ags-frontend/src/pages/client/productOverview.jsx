@@ -60,7 +60,7 @@ export default function ProductOverviewPage() {
 
   // Submit a new review
   async function submitReview() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       toast.error("Please login to submit a review");
       return;

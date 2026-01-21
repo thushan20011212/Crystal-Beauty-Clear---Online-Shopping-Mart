@@ -25,7 +25,7 @@ export default function EditProductPage() {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (token == null) {
             toast.error("Please Login First");
             return;

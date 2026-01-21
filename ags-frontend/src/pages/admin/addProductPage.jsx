@@ -16,7 +16,7 @@ export default function AddProductPage() {
     const navigate = useNavigate();
 
     async function AddProduct() {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         
         if (token == null) {
             toast.error("Please Login First");

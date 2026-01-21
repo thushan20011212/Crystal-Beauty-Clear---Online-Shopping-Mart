@@ -21,7 +21,7 @@ export default function AdminReviewPage() {
   async function fetchReviews() {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (!token) {
         toast.error("Please login first");
         setIsLoading(false);
@@ -61,7 +61,7 @@ export default function AdminReviewPage() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.delete(
         import.meta.env.VITE_BACKEND_URL + "/api/reviews/" + reviewId,
         {

@@ -7,6 +7,7 @@ import ScrollToTop from "../../components/scrollToTop"
 import { IoDiamondOutline } from "react-icons/io5"
 import { TbTruckDelivery } from "react-icons/tb"
 import { BiSupport } from "react-icons/bi"
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
 // Avanaa Glowy Square Landing Page
 export default function LandingPage() {
@@ -82,7 +83,7 @@ export default function LandingPage() {
     }
 
     return (
-        <div className="w-full min-h-screen pt-20">
+        <div className="w-full min-h-screen pt-26">
             {/* Hero Section */}
             <ScrollToTop />
             <section className="relative w-full min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary via-neutral to-primary overflow-hidden">
@@ -96,7 +97,7 @@ export default function LandingPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Left Content */}
                         <div className="text-center lg:text-left space-y-6 animate-fade-in">
-                            <div className="inline-block px-6 py-3 bg-secondary/10 backdrop-blur-xl rounded-full border border-accent/30 shadow-lg">
+                            <div className="inline-block px-8 py-3 bg-secondary/10 backdrop-blur-xl rounded-full border border-accent/30 shadow-lg">
                                 <p className="text-sm font-semibold text-secondary uppercase tracking-wider">Premium Cosmetics Brand</p>
                             </div>
                             
@@ -162,7 +163,8 @@ export default function LandingPage() {
                         {/* Right Image - Ultra-Modern Auto-Changing Animated Gallery */}
                         <div className="relative hidden lg:block">
                             {/* Main Container with slight size adjustment */}
-                            <div className="relative w-full h-[620px]">
+                            {/* Change mt-X to move down (mt-10, mt-20) or -mt-X to move up (-mt-10, -mt-20) */}
+                            <div className="relative w-full h-[620px] -mt-35">
                                 
                                 {/* Floating Background Particles */}
                                 <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -484,7 +486,7 @@ export default function LandingPage() {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
                         <input
                             type="email"
-                            placeholder="Enter your email"
+                            placeholder="(Dummy newsletter section)"
                             className="flex-1 px-6 py-4 rounded-xl border-2 border-accent bg-neutral text-secondary placeholder-muted focus:outline-none focus:border-neutral transition-colors"
                         />
                         <button className="px-8 py-4 bg-neutral text-secondary rounded-xl font-bold hover:bg-accent transition-all duration-300 hover:scale-105">
@@ -532,14 +534,14 @@ export default function LandingPage() {
                         <div>
                             <h4 className="text-lg font-bold mb-4">Connect With Us</h4>
                             <div className="flex gap-4">
-                                <a href="#" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
-                                    <span>📘</span>
+                                <a href="https://www.facebook.com/" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
+                                    <span><FaFacebook /></span>
                                 </a>
-                                <a href="#" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
-                                    <span>📷</span>
+                                <a href="https://www.instagram.com/" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
+                                    <span><FaInstagram /></span>
                                 </a>
-                                <a href="#" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
-                                    <span>🐦</span>
+                                <a href="https://www.youtube.com/" className="w-10 h-10 bg-accent rounded-full flex items-center justify-center hover:bg-neutral hover:text-secondary transition-all">
+                                    <span><FaYoutube /></span>
                                 </a>
                             </div>
                         </div>

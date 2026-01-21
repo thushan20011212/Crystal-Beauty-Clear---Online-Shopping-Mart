@@ -24,7 +24,7 @@ export default function RegisterPage() {
         .then((response) => {
           toast.success("Registration successful!");
           const token = response.data.token;
-          localStorage.setItem("token", token);
+          sessionStorage.setItem("token", token);
           navigate("/");
         })
         .catch((error) => {
@@ -81,7 +81,7 @@ export default function RegisterPage() {
 
       toast.success("Registration successful!");
       const token = response.data.token;
-      localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
       navigate("/");
     } catch (error) {
       console.log("Registration error:", error);

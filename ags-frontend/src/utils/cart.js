@@ -17,6 +17,8 @@ export function removeFromCart(productId) {
     let cart = getCart()
     const newCart = cart.filter((item) => item.productId !== productId)
     localStorage.setItem("cart", JSON.stringify(newCart))
+    // Trigger cart update event
+    window.dispatchEvent(new Event('cartUpdated'))
 }
 
 export function addToCart(product, qty) {
@@ -42,6 +44,8 @@ export function addToCart(product, qty) {
         }
     }
     localStorage.setItem("cart", JSON.stringify(cart))
+    // Trigger cart update event
+    window.dispatchEvent(new Event('cartUpdated'))
 }
 
 export function getTotal() {

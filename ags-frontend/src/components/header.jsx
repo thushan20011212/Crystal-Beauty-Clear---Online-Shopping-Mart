@@ -3,19 +3,41 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsCart3 } from "react-icons/bs";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiPackage } from "react-icons/fi";
 import { toast } from "react-hot-toast";
+import { getCart } from "../utils/cart";
 
 export default function Header() {
     const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
     const navigate = useNavigate();
 
     // Check if user is logged in
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         setIsLoggedIn(!!token);
+    }, []);
+
+    // Update cart count
+    useEffect(() => {
+        const updateCartCount = () => {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            setCartCount(totalItems);
+        };
+
+        updateCartCount();
+
+        // Listen for cart updates
+        window.addEventListener('storage', updateCartCount);
+        window.addEventListener('cartUpdated', updateCartCount);
+
+        return () => {
+            window.removeEventListener('storage', updateCartCount);
+            window.removeEventListener('cartUpdated', updateCartCount);
+        };
     }, []);
 
     useEffect(() => {
@@ -36,8 +58,8 @@ export default function Header() {
 
     // Logout function
     function handleLogout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("cart");
+        sessionStorage.removeItem("token");
+        // Keep cart items - don't clear on logout
         setIsLoggedIn(false);
         toast.success("Logged out successfully!");
         navigate("/");
@@ -171,7 +193,24 @@ export default function Header() {
                         )}
                     </div>
                     
-                    {/* Cart Icon */}
+                    {/* Order History Icon - Only for logged in users */}
+                    {isLoggedIn && (
+                        <Link 
+                            to="/orders" 
+                            className={`w-[50px] h-[50px] flex items-center justify-center rounded-full transition-all duration-300 relative group ${
+                                scrolled ? "hover:bg-white/20" : "hover:bg-accent/10"
+                            }`}
+                            title="My Orders"
+                        >
+                            <FiPackage 
+                                className={`text-2xl group-hover:scale-110 transition-all ${
+                                    scrolled ? "text-muted" : "text-secondary"
+                                }`}
+                            />
+                        </Link>
+                    )}
+                    
+                    {/* Cart Icon with Badge */}
                     <Link 
                         to="/cart" 
                         className={`w-[50px] h-[50px] flex items-center justify-center rounded-full transition-all duration-300 relative group ${
@@ -184,21 +223,48 @@ export default function Header() {
                             }`}
                             title="Shopping Cart" 
                         />
+                        {/* Cart Count Badge - Only show when logged in */}
+                        {isLoggedIn && cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-bounce shadow-lg">
+                                {cartCount > 99 ? '99+' : cartCount}
+                            </span>
+                        )}
                     </Link>
                 </div>
 
-                {/* Mobile Cart Icon */}
-                <Link 
-                    to="/cart" 
-                    className="md:hidden w-[40px] h-[40px] flex items-center justify-center"
-                >
-                    <AiOutlineShoppingCart 
-                        className={`text-2xl transition-colors ${
-                            scrolled ? "text-white" : "text-secondary"
-                        }`}
-                        title="Shopping Cart" 
-                    />
-                </Link>
+                {/* Mobile Cart Icon with Badge */}
+                <div className="md:hidden flex items-center gap-2">
+                    {isLoggedIn && (
+                        <Link 
+                            to="/orders" 
+                            className="w-[40px] h-[40px] flex items-center justify-center relative"
+                        >
+                            <FiPackage 
+                                className={`text-xl transition-colors ${
+                                    scrolled ? "text-white" : "text-secondary"
+                                }`}
+                                title="My Orders" 
+                            />
+                        </Link>
+                    )}
+                    <Link 
+                        to="/cart" 
+                        className="w-[40px] h-[40px] flex items-center justify-center relative"
+                    >
+                        <AiOutlineShoppingCart 
+                            className={`text-2xl transition-colors ${
+                                scrolled ? "text-white" : "text-secondary"
+                            }`}
+                            title="Shopping Cart" 
+                        />
+                        {/* Mobile Cart Count Badge - Only show when logged in */}
+                        {isLoggedIn && cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg">
+                                {cartCount > 9 ? '9+' : cartCount}
+                            </span>
+                        )}
+                    </Link>
+                </div>
             </div>
             
             {/* Mobile Side Drawer */}
@@ -222,7 +288,20 @@ export default function Header() {
                             <a href="/products" className="text-[20px] font-bold text-secondary mx-2 my-4">Products</a>
                             <a href="/about" className="text-[20px] font-bold text-secondary mx-2 my-4">About</a>
                             <a href="/contact" className="text-[20px] font-bold text-secondary mx-2 my-4">Contact</a>
-                            <a href="/cart" className="text-[20px] font-bold text-secondary mx-2 my-4"><BsCart3 /></a>
+                            <a href="/cart" className="text-[20px] font-bold text-secondary mx-2 my-4 flex items-center gap-2">
+                                <BsCart3 />
+                                {cartCount > 0 && (
+                                    <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                        {cartCount > 9 ? '9+' : cartCount}
+                                    </span>
+                                )}
+                            </a>
+                            {isLoggedIn && (
+                                <a href="/orders" className="text-[20px] font-bold text-secondary mx-2 my-4 flex items-center gap-2">
+                                    <FiPackage />
+                                    My Orders
+                                </a>
+                            )}
                             {isLoggedIn ? (
                                 <button 
                                     onClick={() => {

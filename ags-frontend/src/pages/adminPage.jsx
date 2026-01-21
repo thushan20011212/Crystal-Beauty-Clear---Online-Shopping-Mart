@@ -23,14 +23,14 @@ export default function AdminPage() {
 
   // Logout function
   function handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("cart");
+    sessionStorage.removeItem("token");
+    // Keep cart items - don't clear on logout
     toast.success("Logged out successfully!");
     navigate("/");
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       setStatus("unauthenticated");
       window.location.href = "/login";

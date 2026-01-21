@@ -30,7 +30,7 @@ export default function AdminProductPage() {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if (!token) {
       toast.error("Please login first");

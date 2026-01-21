@@ -20,7 +20,7 @@ export default function AdminOrderPage() {
   async function fetchOrders() {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (!token) {
         toast.error("Please login first");
         setIsLoading(false);
@@ -120,7 +120,7 @@ export default function AdminOrderPage() {
                         onChange={async (e) => {
                           const updatedValue = e.target.value;
                           try{
-                            const token = localStorage.getItem("token");
+                            const token = sessionStorage.getItem("token");
                             await axios.put(
                               import.meta.env.VITE_BACKEND_URL + 
                               "/api/orders/" +

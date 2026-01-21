@@ -46,7 +46,7 @@ export default function AdminUsersPage() {
     async function fetchUsers() {
         setIsLoading(true);
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
             if (!token) {
                 toast.error("Please login first");
                 setIsLoading(false);
@@ -84,7 +84,7 @@ export default function AdminUsersPage() {
 
     async function updateUserRole(userId, newRole) {
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
             await axios.put(
                 import.meta.env.VITE_BACKEND_URL + "/api/user/admin/" + userId + "/role",
                 { role: newRole },
@@ -112,7 +112,7 @@ export default function AdminUsersPage() {
         }
 
         try {
-            const token = localStorage.getItem("token")
+            const token = sessionStorage.getItem("token")
             const response = await axios.delete(
                 import.meta.env.VITE_BACKEND_URL + "/api/user/admin/" + userId,
                 {

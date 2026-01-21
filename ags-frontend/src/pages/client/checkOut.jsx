@@ -55,7 +55,7 @@ export default function CheckOutPage() {
     }
 
     async function placeOrder() {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         
         if (!token) {
             toast.error("You need to be logged in to place an order.");
