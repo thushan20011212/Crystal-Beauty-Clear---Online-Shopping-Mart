@@ -83,7 +83,7 @@ export default function Header() {
                 /> 
                 
                 {/* Logo - Centered on Mobile, Left on Desktop */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 md:relative md:left-0 md:transform-none">
+                <div className="absolute left-1/2 transform -translate-x-1/2 md:relative md:left-0 md:transform-none md:ml-8">
                     <img 
                         onClick={() => navigate("/")} 
                         src="/logo.png" 
