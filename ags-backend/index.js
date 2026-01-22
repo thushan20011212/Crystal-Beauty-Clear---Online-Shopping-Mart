@@ -43,11 +43,8 @@ app.use((req, res, next) => {
 
 // API Routes
 app.use('/api/user', userRouter);
-app.use('/api/product', productRouter);
 app.use('/api/products', productRouter);
-app.use('/api/order', orderRouter);
 app.use('/api/orders', orderRouter);
-app.use('/api/review', reviewRouter);
 app.use('/api/reviews', reviewRouter);
 
 // Connect to MongoDB and Start Server
