@@ -1,11 +1,5 @@
 # Avanaa — Glowy Square Online Shopping Mart
 
-Professional README for the Avanaa Glowy Square e‑commerce project.
-
-This document is written to be comprehensive and actionable for developers, operators, and stakeholders. It explains the problem, solution choices, architecture, setup, operational runbook, testing, known issues, and future improvements.
-
----
-
 ## Table of contents
 - Project summary
 - Problem statement
@@ -57,15 +51,12 @@ Requirements addressed by this project:
 
 ---
 
-## Why this solution (rationale)
+## Why this solution?
 - **MERN stack (React + Express + MongoDB)**: Well-suited for rapid development of full-stack JS apps. Uses the same language (JavaScript/TypeScript optional) across tiers.
-- **Monorepo layout**: Keeping frontend and backend together simplifies local development, versioning and CI while avoiding the operational complexity of multiple microservices for a starter app.
 - **Vite + React**: Fast dev server and modern build optimizations, good DX.
 - **Express + Mongoose**: Lightweight API layer and convenient schema handling for MongoDB.
 - **JWT auth + sessionStorage**: Provides stateless server sessions with client-side session control; sessionStorage is used intentionally to avoid persistent login across browser closes in this implementation (can be switched to localStorage for persistent login).
 - **Tailwind CSS**: Utility-first approach for quick, consistent responsive styles.
-
-This combination balances developer productivity, performance, and a realistic feature set for an e-commerce starter product.
 
 ---
 
@@ -102,78 +93,12 @@ Ports used in development (default):
 
 ---
 
-## Challenges faced
-This project evolved from multiple feature requests and bug reports. Notable challenges included:
-1. Authentication consistency: token storage mismatches between frontend components (some used `localStorage`, others `sessionStorage`). This resulted in Google sign-in appearing successful but the app not recognizing the logged-in state.
-2. Cart persistence and real-time badge updates: cart state persisted in `localStorage` but header badge required a reliable event to update across components.
-3. Order creation failures: frontend called a non-matching endpoint (`/api/orders/user`) while backend expected `/api/orders`. This caused Axios errors on checkout.
-4. Order status synchronization: admin UI allowed invalid status values (typos and unsupported values), causing 400 errors from backend validation.
-5. Header / layout overlap issues: fixed by consistent page padding (pt-20) to account for fixed header.
-6. Mobile/desktop UX inconsistencies (various small layout issues across pages).
-
----
-
-## How these challenges were solved
-This section captures the concrete fixes, refactors, and process decisions that addressed the above issues.
-
-1. **Authentication mismatch**
-   - Replaced all `localStorage` token reads/writes/removes with `sessionStorage` to implement the desired session behavior (auto-logout on tab close).
-   - Updated Google OAuth callback handlers to store tokens in `sessionStorage`.
-   - Updated other pages (admin and client) to read token from `sessionStorage` consistently.
-
-2. **Cart badge real-time updates**
-   - Implemented an event-based update: `window.dispatchEvent(new Event('cartUpdated'))` in `utils/cart.js` (`addToCart`, `removeFromCart`) and after checkout when cart is cleared.
-   - Header listens for `cartUpdated` and `storage` events to refresh counts immediately.
-
-3. **Order creation endpoint mismatch**
-   - Fixed frontend to POST to `/api/orders` (backend implementation existed) and updated the order history fetch to use `/api/orders`.
-   - Standardized response handling (frontend now expects `response.data` where backend returns JSON payload).
-
-4. **Order status validation errors**
-   - Aligned admin UI status options with backend allowed values: `pending`, `processing`, `shipped`, `delivered`, `cancelled` (correct spelling) and removed invalid options like `completed`/`returned`.
-   - Converted frontend status displays to use lowercase checks (or `toLowerCase()`) so case mismatches don't show wrong styling.
-
-5. **Header overlap and layout fixes**
-   - Added `pt-20` on main page containers to prevent content being hidden behind the fixed header.
-   - Centralized header styling and fixed mobile drawer behavior.
-
-6. **Mobile/UX polish**
-   - Applied responsive Tailwind classes across components, added sticky bottom action bars for mobile, and adjusted spacing.
-
-All changes were made in the frontend files only (no backend code was modified) unless needed to add or align endpoints. The fixes were validated locally with the dev server and manual interaction flows.
-
----
-
-## What I would improve next (roadmap & suggested enhancements)
-These are practical next steps that would extend the product toward production-readiness and better UX.
-
-### Priority: Production-readiness
-1. **Payment integration** — Add Stripe (or another provider) to handle payments safely and record paid orders.
-2. **Inventory & stock control** — Prevent overselling and decrement stock on checkout; add admin stock alerts.
-3. **Rate limiting & security** — Add request throttling, input sanitization, and stronger validation.
-4. **Email & notifications** — Order confirmation emails and status change notifications (e.g., via Nodemailer or transactional email provider).
-5. **CI & CD pipelines** — Add GitHub Actions for lint/test/build and automated deployments.
-
-### Medium-term improvements
-1. **Analytics & admin dashboard** — Sales charts, product performance, user activity.
-2. **Role-based access control (RBAC)** — More granular permissions for operators.
-3. **Caching & performance** — Add Redis caching for hot endpoints, optimize DB indexes.
-4. **E2E tests** — Add Playwright or Cypress tests for key flows (login, add to cart, checkout).
-5. **Internationalization (i18n)** — Multi-language support and currency formatting.
-
-### Long-term / nice-to-have
-1. **Microservice split** — If scale demands, split payments, products and orders into independent services.
-2. **Real-time features** — WebSockets or server-sent events for real-time order updates.
-3. **Search engine** — Integrate Elasticsearch or Algolia for fast product search and autocomplete.
-
----
-
 ## Getting started (development)
 This repo contains `ags-backend` and `ags-frontend`. No code changes are required for the README.
 
 ### Prerequisites
 - Node.js (v18+ recommended)
-- npm (or yarn)
+- npm
 - MongoDB (Atlas connection string recommended)
 - Google OAuth credentials for local testing (client id/secret)
 - Optional: Supabase for image uploads (project URL and anon key)
@@ -282,28 +207,11 @@ Refer to the controllers in `ags-backend/controllers/` for request/response shap
 
 ---
 
-## Testing and verification
-- Manual flows validated: registration/login (email + Google), add to cart, checkout, order creation, order history, admin status updates, product CRUD, review posting.
-- Add automated tests:
-  - Unit tests for controllers (Jest)
-  - Integration tests for API (Supertest)
-  - E2E tests (Cypress/Playwright)
-
----
-
 ## Deployment notes
 - Build frontend: `cd ags-frontend && npm run build`.
-- Host frontend assets on static hosting (Netlify, Vercel, S3, etc.) and point API calls to the deployed backend.
-- For backend: use process manager (PM2) or containerize with Docker; ensure environment variables are set securely.
+- Host frontend assets on static hosting (Vercel) and point API calls to the deployed backend.
+- For backend: use render.com
 - Configure Google OAuth redirect URIs to match production domain.
-
----
-
-## Troubleshooting & common fixes
-- **403 Forbidden (Invalid token)**: Verify `JWT_KEY` matches and token is sent as `Authorization: Bearer <token>`.
-- **Axios 400 on order status**: Ensure admin sends only allowed statuses: `pending`, `processing`, `shipped`, `delivered`, `cancelled`.
-- **Google sign-in but not logged in**: Ensure token storage is consistent (project uses `sessionStorage`); also check `VITE_GOOGLE_CLIENT_ID` and OAuth redirect URIs.
-- **Cart badge not updating**: Ensure cart operations dispatch `cartUpdated` event and header listens for it.
 
 ---
 
@@ -316,14 +224,6 @@ Refer to the controllers in `ags-backend/controllers/` for request/response shap
 ---
 
 ## License
-This project uses the ISC license (check `package.json`). Replace or update license text to match your policy.
+Add MIT License for better quality and originality.
 
 ---
-
-## Final notes
-This README captures the current state of the repository and the engineering decisions made during development. If you want, I can:
-- Add an `EXPORT.md` with API contract examples (sample requests/responses)
-- Add `docker-compose` files for local dev with MongoDB
-- Add E2E test skeletons (Cypress)
-
-If you'd like any changes to tone, level of detail, or additional sections (e.g., API examples, sequence diagrams), tell me which parts to expand and I will update the README accordingly.
