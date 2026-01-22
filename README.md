@@ -1,5 +1,8 @@
 # Avanaa — Glowy Square Online Shopping Mart
 
+## Live Demo
+Check out the live version of this project [here](https://avanaa-glowy-square-online-shopping.vercel.app/)!
+
 ## Table of contents
 - Project summary
 - Problem statement
